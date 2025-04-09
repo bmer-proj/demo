@@ -12,10 +12,14 @@
     <!-- Header with Home Button -->
     <nav class="main-nav" id="mainNav">
         <div class="nav-header">
-            <button class="hamburger-menu" onclick="toggleMenu()">☰</button>
-            <span class="nav-text">View Other People</span>
-            <button class="add-person-btn" onclick="addNewPerson()">+</button>
-            <span class="nav-text">Add New Profile</span>
+            <div class="nav-header" onclick="toggleMenu()">
+                <button class="hamburger-menu">☰</button>
+                <span class="nav-text">View Other Profiles</span>
+            </div>
+            <div class="add-person-wrapper" onclick="addNewPerson()">
+                <button class="add-person-btn">+</button>
+                <span class="nav-text">Add New Profile</span>
+            </div>
         </div>
         <div class="menu-items">
             <ol class="breadcrumb">
