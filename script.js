@@ -148,20 +148,20 @@ function updateNavigation() {
     breadcrumb.innerHTML = '';
     
     Object.values(profiles).forEach(profile => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = `#${profile.id}`;
-        a.textContent = profile.name;
-        a.classList.add('nav-text');
-        a.onclick = (e) => {
-            e.preventDefault();
+        const listItem = document.createElement('li');
+        const anchor = document.createElement('a');
+        anchor.href = `#${profile.id}`;
+        anchor.textContent = profile.name;
+        anchor.classList.add('nav-text');
+        anchor.onclick = (event) => {
+            event.preventDefault();
             switchProfile(profile.id);
         };
         if (profile.id === currentProfileId) {
-            a.classList.add('active');
+            anchor.classList.add('active');
         }
-        li.appendChild(a);
-        breadcrumb.appendChild(li);
+        listItem.appendChild(anchor);
+        breadcrumb.appendChild(listItem);
     });
 }
 
@@ -184,8 +184,8 @@ function initializeNavigation() {
     const navLinks = document.querySelectorAll('.breadcrumb a');
     
     navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
             
             navLinks.forEach(l => l.classList.remove('active'));
             
@@ -206,9 +206,9 @@ function initializeNavigation() {
 // Edit stuff
 function toggleEditImage() {
     const input = document.getElementById('imageInput');
-    const saveBtn = document.querySelector('button.save-btn');
+    const saveButton = document.querySelector('button.save-btn');
     input.style.display = input.style.display === 'none' ? 'block' : 'none';
-    saveBtn.style.display = input.style.display;
+    saveButton.style.display = input.style.display;
     input.addEventListener('change', handleImageChange);
 }
 
@@ -216,11 +216,11 @@ function handleImageChange(event) {
     const file = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function(event) {
             const profileImage = document.querySelector('.profile-image');
-            profileImage.src = e.target.result;
+            profileImage.src = event.target.result;
             if (currentProfileId && profiles[currentProfileId]) {
-                profiles[currentProfileId].imageUrl = e.target.result;
+                profiles[currentProfileId].imageUrl = event.target.result;
             }
         };
         reader.readAsDataURL(file);
@@ -238,10 +238,10 @@ function saveImageChanges() {
 
 function toggleEditName() {
     const input = document.getElementById('nameInput');
-    const saveBtn = document.querySelector('.name-section .save-btn');
+    const saveButton = document.querySelector('.name-section .save-btn');
     const currentName = document.querySelector('h2').textContent;
     input.style.display = input.style.display === 'none' ? 'block' : 'none';
-    saveBtn.style.display = input.style.display;
+    saveButton.style.display = input.style.display;
     if (input.style.display === 'block') {
         input.value = currentName;
     }
@@ -263,10 +263,10 @@ function saveNameChanges() {
 
 function toggleEditRelationship() {
     const input = document.getElementById('relationshipInput');
-    const saveBtn = document.getElementById('relationshipSaveBtn');
+    const saveButton = document.getElementById('relationshipSaveBtn');
     const currentRelation = document.querySelector('h4').textContent;
     input.style.display = input.style.display === 'none' ? 'block' : 'none';
-    saveBtn.style.display = input.style.display;
+    saveButton.style.display = input.style.display;
     if (input.style.display === 'block') {
         input.value = currentRelation;
     }
@@ -317,6 +317,13 @@ const roleBasedActivities = {
     ]
 };
 
+function showActivityPopup(activity) {
+    const title = activity.title;
+    const duration = activity.duration;
+    const instructions = activity.instructions.join('\n');
+    alert(`${title}\nDuration: ${duration}\n\nInstructions:\n${instructions}`);
+}
+
 function startActivity(activityType) {
     const currentProfile = profiles[currentProfileId];
     const relationship = currentProfile?.relationship?.toLowerCase() || 'default';
@@ -340,10 +347,10 @@ function startActivity(activityType) {
        }
     };
 
-    const activity = activityDetails[activities[0]];
+    const activity = activityDetails[activities[0]]; // Adjust this line to select the correct activity based on the button clicked
     if (!activity) return;
 
-    alert(`${activity.title}\nDuration: ${activity.duration}\n\nInstructions:\n${activity.instructions.join('\n')}`);
+    showActivityPopup(activity);
 }
 
 function showTopic(topic) {
