@@ -295,64 +295,6 @@ function textOutput() {
   welcomeText.innerText = "Welcome, " + textInput.value;
 }
 
-const roleBasedActivities = {
-    'daughter': [
-        'Look through family photos',
-        'Cook a family recipe together',
-        'Do gentle exercises together',
-        'Work on a craft project',
-        'Garden together'
-    ],
-    'nurse': [
-        'Review medication schedule',
-        'Check vital signs',
-        'Do memory exercises',
-        'Practice physical therapy exercises',
-        'Review daily routine'
-    ],
-    'default': [
-        'Take a short walk',
-        'Listen to music',
-        'Look at photos'
-    ]
-};
-
-function showActivityPopup(activity) {
-    const title = activity.title;
-    const duration = activity.duration;
-    const instructions = activity.instructions.join('\n');
-    alert(`${title}\nDuration: ${duration}\n\nInstructions:\n${instructions}`);
-}
-
-function startActivity(activityType) {
-    const currentProfile = profiles[currentProfileId];
-    const relationship = currentProfile?.relationship?.toLowerCase() || 'default';
-    const activities = roleBasedActivities[relationship] || roleBasedActivities.default;
-
-    const activityDetails = {
-        [activities[0]]: {
-           title: "Take a Short Walk",
-           instructions: ["Choose a familiar route", "Hold hands if needed", "Point out interesting things"],
-           duration: "15-30 minutes"
-       },
-       [activities[1]]: {
-           title: "Listen to Music",
-           instructions: ["Play favorite songs", "Sing together", "Discuss memories"],
-           duration: "20-40 minutes"
-       },
-       [activities[2]]: {
-           title: "Look at Photos",
-           instructions: ["Show recent photos", "Ask about people in pictures", "Share stories"],
-           duration: "20-30 minutes"
-       }
-    };
-
-    const activity = activityDetails[activities[0]]; // Adjust this line to select the correct activity based on the button clicked
-    if (!activity) return;
-
-    showActivityPopup(activity);
-}
-
 function showTopic(topic) {
     const topics = {
         family: [
@@ -377,3 +319,24 @@ function showTopic(topic) {
 
     alert(`Conversation Topic: ${topic.charAt(0).toUpperCase() + topic.slice(1)}\n\nQuestions:\n${questions.join('\n')}`);
 }
+
+function showActivityPopup(activityType) {
+
+    const activityDetails = {
+        walk: {
+            title: "Take a Short Walk",
+            instructions: ["Choose a familiar route", "Hold hands if needed", "Point out interesting things"],
+        },
+        music: {
+            title: "Listen to Music",
+            instructions: ["Play favorite songs", "Sing together", "Discuss memories"],
+        },
+        photo: {
+            title: "Look at Photos",
+            instructions: ["Show recent photos", "Ask about people in pictures", "Share stories"],
+        }
+    };
+    const details = activityDetails[activityType];
+    alert(`${details.title}\n\nInstructions:\n${details.instructions.join('\n')}`);
+}
+
