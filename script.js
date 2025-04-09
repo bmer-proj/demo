@@ -339,4 +339,3 @@ function showActivityPopup(activityType) {
     const details = activityDetails[activityType];
     alert(`${details.title}\n\nInstructions:\n${details.instructions.join('\n')}`);
 }
-
